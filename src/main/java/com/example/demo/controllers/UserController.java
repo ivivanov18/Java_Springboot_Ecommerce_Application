@@ -25,14 +25,17 @@ import javax.validation.ReportAsSingleViolation;
 @RequestMapping("/api/user")
 public class UserController {
 	
-	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
 	private CartRepository cartRepository;
 
-	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	public UserController(UserRepository userRepo, CartRepository cartRepo, BCryptPasswordEncoder encoder) {
+		this.userRepository = userRepo;
+		this.cartRepository = cartRepo;
+		this.bCryptPasswordEncoder = encoder;
+	}
 
 	@GetMapping("/id/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
@@ -53,7 +56,13 @@ public class UserController {
 		cartRepository.save(cart);
 		user.setCart(cart);
 
-		if (user.getPassword().length() < 7 ||
+		if (createUserRequest.getPassword() == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		if (createUserRequest.getConfirmPassword() == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		if (createUserRequest.getPassword().length() < 7 ||
 				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())
 		) {
 			return ResponseEntity.badRequest().build();
