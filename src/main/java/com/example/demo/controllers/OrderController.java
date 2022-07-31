@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.List;
 
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +21,13 @@ import com.example.demo.model.persistence.repositories.UserRepository;
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
-	
-	
-	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
 	private OrderRepository orderRepository;
-	
+
+	public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
+		this.orderRepository = orderRepository;
+		this.userRepository = userRepository;
+	}
 	
 	@PostMapping("/submit/{username}")
 	public ResponseEntity<UserOrder> submit(@PathVariable String username) {
