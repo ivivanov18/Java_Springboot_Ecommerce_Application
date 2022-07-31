@@ -23,9 +23,4 @@ public class HelperParametrizedTest {
         String empNames[][] = {{"sareeta", "sareeta"}, {"sareeta", "Jeff"}};
         return Arrays.asList(empNames);
     }
-
-    @Test
-    public void verify_input_name_is_not_same_as_output_name() {
-
-    }
 }
