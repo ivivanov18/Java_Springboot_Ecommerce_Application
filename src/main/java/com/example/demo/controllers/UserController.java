@@ -2,6 +2,8 @@ package com.example.demo.controllers;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +27,13 @@ import javax.validation.ReportAsSingleViolation;
 @RequestMapping("/api/user")
 public class UserController {
 	
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
-	private CartRepository cartRepository;
+	private final CartRepository cartRepository;
 
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	public UserController(UserRepository userRepo, CartRepository cartRepo, BCryptPasswordEncoder encoder) {
 		this.userRepository = userRepo;
@@ -52,24 +56,30 @@ public class UserController {
 	public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
 		User user = new User();
 		user.setUsername(createUserRequest.getUsername());
+		logger.info("username set with: {}", createUserRequest.getUsername());
+
 		Cart cart = new Cart();
 		cartRepository.save(cart);
 		user.setCart(cart);
 
 		if (createUserRequest.getPassword() == null) {
+			logger.error("User {} cannot be created. Password is null.", createUserRequest.getUsername());
 			return ResponseEntity.badRequest().build();
 		}
 		if (createUserRequest.getConfirmPassword() == null) {
+			logger.error("User {} cannot be created. Password confirmation is null.", createUserRequest.getUsername());
 			return ResponseEntity.badRequest().build();
 		}
 		if (createUserRequest.getPassword().length() < 7 ||
 				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())
 		) {
+			logger.error("User {} cannot be created. Password length or confirmation do not match the requirements.", createUserRequest.getUsername());
 			return ResponseEntity.badRequest().build();
 		}
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 		userRepository.save(user);
+		logger.info("User {} has been created.", user.getUsername());
 		return ResponseEntity.ok(user);
 	}
-	
+
 }
