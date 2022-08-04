@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>auth-course</artifactId>
+	<artifactId>ecommerce-app</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>auth-course</name>
@@ -85,11 +85,27 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+<!--		<dependency>-->
+<!--			<groupId>org.slf4j</groupId>-->
+<!--			<artifactId>slf4j-log4j12</artifactId>-->
+<!--			<version>1.7.36</version>-->
+<!--			<type>pom</type>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>ch.qos.logback</groupId>-->
+<!--			<artifactId>logback-core</artifactId>-->
+<!--			<version>1.2.11</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.slf4j</groupId>-->
+<!--			<artifactId>slf4j-api</artifactId>-->
+<!--			<version>1.7.36</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.36</version>
-			<type>pom</type>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.11</version>
 		</dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
