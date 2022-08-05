@@ -18,12 +18,12 @@
         </encoder>
     </appender>
 
-    <logger name="ecommerce-app" level="debug" additivity="false">
+    <logger name="ecommerce-app" level="info" additivity="false">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </logger>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="CONSOLE"/>
     </root>
 
